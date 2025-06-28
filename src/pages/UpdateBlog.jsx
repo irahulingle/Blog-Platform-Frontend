@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 import JoditEditor from 'jodit-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import api from '@/services/api'; // ✅ Uses axios instance
+import api from '@/services/api'; // Axios instance with Authorization header
 import { toast } from 'sonner';
 import { setBlog } from '@/redux/blogSlice';
 
@@ -110,56 +110,43 @@ const UpdateBlog = () => {
   const togglePublishUnpublish = async (action) => {
     try {
       const res = await api.patch(`/blog/action/${id}/publish?action=${action}`);
-
       if (res.data.success) {
         toast.success(res.data.message);
         setPublish((prev) => !prev);
         navigate('/dashboard/your-blog');
       } else {
-        toast.error('Failed to update status');
+        toast.error('Failed to update publish status');
       }
     } catch (error) {
       console.error(error);
-      toast.error('Something went wrong while updating status');
+      toast.error('Error toggling publish status');
     }
   };
 
- const deleteBlog = async () => {
-  const token = localStorage.getItem('token');
-
-  try {
-    const res = await api.delete(`/blog/delete/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (res.data.success) {
-      const updatedBlogData = blog.filter((b) => b._id !== id);
-      dispatch(setBlog(updatedBlogData));
-      toast.success(res.data.message);
-      navigate('/dashboard/your-blog');
+  const deleteBlog = async () => {
+    try {
+      const res = await api.delete(`/blog/delete/${id}`);
+      if (res.data.success) {
+        const updated = blog.filter((b) => b._id !== id);
+        dispatch(setBlog(updated));
+        toast.success(res.data.message);
+        navigate('/dashboard/your-blog');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Error deleting blog');
     }
-  } catch (error) {
-    console.error(error);
-    toast.error('Something went wrong while deleting the blog');
-  }
-};
-
+  };
 
   return (
     <div className='pb-10 px-3 pt-20 md:ml-[320px]'>
       <div className='max-w-6xl mx-auto mt-8'>
         <Card className='w-full bg-white dark:bg-gray-800 p-5 space-y-2'>
-          <h1 className='text-4xl font-bold'>Basic Blog Information</h1>
+          <h1 className='text-4xl font-bold'>Edit Blog</h1>
           <p>Make changes to your blog here. Click publish when you're done.</p>
 
           <div className='space-x-2'>
-            <Button
-              onClick={() =>
-                togglePublishUnpublish(selectBlog?.isPublished ? 'false' : 'true')
-              }
-            >
+            <Button onClick={() => togglePublishUnpublish(selectBlog?.isPublished ? 'false' : 'true')}>
               {selectBlog?.isPublished ? 'Unpublish' : 'Publish'}
             </Button>
             <Button variant='destructive' onClick={deleteBlog}>
@@ -171,10 +158,10 @@ const UpdateBlog = () => {
             <Label>Title</Label>
             <Input
               type='text'
-              placeholder='Enter a title'
               name='title'
               value={blogData.title}
               onChange={handleChange}
+              placeholder='Enter a title'
             />
           </div>
 
@@ -182,10 +169,10 @@ const UpdateBlog = () => {
             <Label>Subtitle</Label>
             <Input
               type='text'
-              placeholder='Enter a subtitle'
               name='subtitle'
               value={blogData.subtitle}
               onChange={handleChange}
+              placeholder='Enter a subtitle'
             />
           </div>
 
@@ -222,13 +209,7 @@ const UpdateBlog = () => {
 
           <div>
             <Label>Thumbnail</Label>
-            <Input
-              id='file'
-              type='file'
-              onChange={selectThumbnail}
-              accept='image/*'
-              className='w-fit'
-            />
+            <Input id='file' type='file' onChange={selectThumbnail} accept='image/*' className='w-fit' />
             {previewThumbnail && (
               <img src={previewThumbnail} className='w-64 my-2' alt='Blog Thumbnail' />
             )}
