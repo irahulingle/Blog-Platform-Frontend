@@ -12,7 +12,7 @@ import { setUser } from "@/redux/authSlice";
 import auth from "../assets/auth.jpg";
 
 // ✅ Axios base URL and token
-axios.defaults.baseURL = "http://localhost:8000/api/v1";
+axios.defaults.baseURL = "https://blog-platform-backend-crkc.onrender.com/api/v1";
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {

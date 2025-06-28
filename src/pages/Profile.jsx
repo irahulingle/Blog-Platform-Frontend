@@ -80,7 +80,7 @@ const Profile = () => {
     }
 
     const response = await axios.put(
-      "http://localhost:8000/api/v1/user/profile/update",
+      "https://blog-platform-backend-crkc.onrender.com/api/v1/user/profile/update",
       formData,
       {
         headers: {

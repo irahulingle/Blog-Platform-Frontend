@@ -10,7 +10,7 @@ const Comments = () => {
     const navigate = useNavigate()
     const getTotalComments = async()=>{
         try {
-          const res = await axios.get(`http://localhost:8000/api/v1/comment/my-blogs/comments`,{withCredentials:true})
+          const res = await axios.get(`https://blog-platform-backend-crkc.onrender.com/api/v1/comment/my-blogs/comments`,{withCredentials:true})
           if(res.data.success){
             setAllComments(res.data.comments)
           }
@@ -33,7 +33,6 @@ const Comments = () => {
                 <TableCaption>A list of your recent comments.</TableCaption>
                 <TableHeader >
                     <TableRow>
-                        {/* <TableHead className="w-[100px]">Author</TableHead> */}
                         <TableHead>Blog Title</TableHead>
                         <TableHead>Comment</TableHead>
                         <TableHead>Author</TableHead>
@@ -42,10 +41,8 @@ const Comments = () => {
                 </TableHeader>
                 <TableBody>
                     {allComments?.map((comment, index) => (
-                        <TableRow key={index}>
-                            {/* <TableCell className="font-medium">{item.author.firstName}</TableCell> */}
-                            <TableCell className="flex gap-4 items-center">
-                                {/* <img src={item.thumbnail} alt="" className='w-20 rounded-md hidden md:block' /> */}
+                        <TableRow key={index}>                           
+                            <TableCell className="flex gap-4 items-center">                           
                                 {comment.postId.title}
                             </TableCell>
                             <TableCell>{comment.content}</TableCell>
@@ -56,12 +53,6 @@ const Comments = () => {
                         </TableRow>
                     ))}
                 </TableBody>
-                {/* <TableFooter>
-                    <TableRow>
-                        <TableCell colSpan={3}>Total</TableCell>
-                        <TableCell className="text-right">$2,500.00</TableCell>
-                    </TableRow>
-                </TableFooter> */}
             </Table>
 
         </Card>

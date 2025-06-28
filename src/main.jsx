@@ -11,7 +11,7 @@ import ThemeProvider from './components/ThemeProvider';
 import axios from 'axios'; // ✅ Import axios directly here
 
 // ✅ Global axios config (NO extra file needed)
-axios.defaults.baseURL = "http://localhost:8000/api/v1";
+axios.defaults.baseURL = "https://blog-platform-backend-crkc.onrender.com/api/v1";
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {

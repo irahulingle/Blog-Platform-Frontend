@@ -39,7 +39,7 @@ const BlogView = () => {
     try {
       const action = liked ? 'dislike' : 'like';
       const res = await axios.get(
-        `http://localhost:8000/api/v1/blog/action/${selectedBlog._id}/${action}`,
+        `https://blog-platform-backend-crkc.onrender.com/api/v1/blog/action/${selectedBlog._id}/${action}`,
         { withCredentials: true }
       );
 
@@ -196,8 +196,6 @@ const BlogView = () => {
             </div>
           </div>
         </div>
-
-        {/* ✅ Pass correct postId to CommentBox */}
         <CommentBox postId={selectedBlog._id} />
 
       </div>

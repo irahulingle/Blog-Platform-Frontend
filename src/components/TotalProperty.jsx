@@ -15,7 +15,7 @@ const TotalProperty = () => {
   const getOwnBlog = async () => {
     try {
       const token = localStorage.getItem("token")
-      const res = await axios.get(`http://localhost:8000/api/v1/blog/get-own-blogs`, {
+      const res = await axios.get(`https://blog-platform-backend-crkc.onrender.com/api/v1/blog/get-own-blogs`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -34,7 +34,7 @@ const TotalProperty = () => {
   const getTotalComments = async () => {
     try {
       const token = localStorage.getItem("token")
-      const res = await axios.get(`http://localhost:8000/api/v1/comment/my-blogs/comments`, {
+      const res = await axios.get(`https://blog-platform-backend-crkc.onrender.com/api/v1/comment/my-blogs/comments`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -50,7 +50,7 @@ const TotalProperty = () => {
   const getTotalLikes = async () => {
     try {
       const token = localStorage.getItem("token")
-      const res = await axios.get(`http://localhost:8000/api/v1/blog/my-blogs/likes`, {
+      const res = await axios.get(`https://blog-platform-backend-crkc.onrender.com/api/v1/blog/my-blogs/likes`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

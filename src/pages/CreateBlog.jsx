@@ -45,7 +45,7 @@ const CreateBlog = () => {
       console.log('Sending blog data:', { title, category })
 
       const res = await axios.post(
-        `http://localhost:8000/api/v1/blog/`,
+        `https://blog-platform-backend-crkc.onrender.com/api/v1/blog/`,
         { title, category },
         {
           headers: {
